@@ -1,236 +1,684 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Naresh Kumar Arumugam — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Naresh Kumar — Portfolio</title>
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <style>
-:root{
-  --bg:#05060a;
-  --card:rgba(255,255,255,0.03);
-  --text:#eaf2ff;
-  --muted:#b9c6d8;
-  --r:#ff3c6a; /* red */
-  --b:#5d8aff; /* blue */
-  --p:#a94dff; /* purple */
-  --white:#ffffff;
+:root {
+    --blue: #3f8cff;
+    --purple: #c77dff;
+    --pink: #ff4d94;
+    --muted: #b8c4d1;
+    --white: #ffffff;
+    --dark: #05050a;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
-  color:var(--text);
-  background:
-    radial-gradient(1200px 600px at 10% 10%, rgba(169,77,255,0.08), transparent 10%),
-    radial-gradient(800px 400px at 90% 80%, rgba(93,138,255,0.06), transparent 10%),
-    linear-gradient(180deg,#06060b 0%, #0b0812 100%);
-  -webkit-font-smoothing:antialiased;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--dark);
+    color: white;
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
 }
-.container{max-width:1100px;margin:0 auto;padding:24px}
-nav{position:sticky;top:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);padding:12px 0;z-index:50}
-nav .container{display:flex;align-items:center;gap:12px}
-.logo{font-weight:700;color:var(--white)}
-.nav-links{margin-left:auto;display:flex;gap:12px;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px}
-.nav-links a:hover{color:var(--white);background:var(--card)}
 
-/* HERO */
-.hero{padding:72px 0;display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:center}
-h1{font-size:2.4rem;margin:0}
-.tagline{color:var(--muted);margin-top:10px;font-size:1rem}
-.role-badges{display:flex;gap:8px;margin-top:14px}
-.badge{background:linear-gradient(90deg,var(--r),var(--b));padding:8px 12px;border-radius:999px;color:#041018;font-weight:600;font-size:0.95rem;box-shadow:0 6px 18px rgba(93,138,255,0.06)}
-.photo-frame{width:320px;height:320px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(0,0,0,0.6)}
-.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+/* ---------- LOADER ---------- */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader-nk {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--purple);
+    animation: floatNK 2s infinite;
+}
+@keyframes floatNK {
+    0%   { transform: translateY(0); opacity: 0.7; }
+    50%  { transform: translateY(-12px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.7; }
+}
 
-/* SECTIONS */
-.section{padding:56px 0;border-top:1px solid rgba(255,255,255,0.02)}
-h2{margin:0 0 14px 0;font-size:1.6rem}
-.about p{color:var(--muted);max-width:920px;line-height:1.7}
+/* ---------- NEON GRID BG ---------- */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 70px 70px;
+    opacity: 0.04;
+    animation: gridMove 16s linear infinite;
+    z-index: -10;
+}
+@keyframes gridMove {
+    from { transform: translateY(0); }
+    to   { transform: translateY(70px); }
+}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
-.skill{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;text-align:center;color:var(--white)}
+/* ---------- PARALLAX PLANET ---------- */
+.planet {
+    position: fixed;
+    top: 150px;
+    right: -150px;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,120,200,0.07), transparent 20%),
+        radial-gradient(circle at 70% 70%, rgba(90,140,255,0.07), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 40%),
+        linear-gradient(180deg, rgba(70,30,120,0.3), rgba(10,6,30,0.4));
+    filter: blur(10px);
+    opacity: 0.8;
+    z-index: -4;
+    transition: transform 0.12s linear;
+}
 
-/* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:14px}
-.card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
-.card .thumb{height:140px;border-radius:8px;background:linear-gradient(120deg,var(--p),var(--b));display:flex;align-items:center;justify-content:center;color:#001217;font-weight:700}
-.card h3{margin:10px 0 6px 0}
-.card p{color:var(--muted);font-size:0.95rem}
-.actions{display:flex;gap:8px;margin-top:10px}
-.btn{display:inline-block;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--r),var(--b));color:#071018;font-weight:700;text-decoration:none}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white)}
+/* ---------- STARFIELD ---------- */
+.star {
+    position: fixed;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: -9;
+}
 
-/* CONTACT */
-.contact-list{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-.contact-item{display:flex;gap:10px;align-items:center;color:var(--muted)}
-.contact-item a{color:var(--muted);text-decoration:none}
-.contact-item a:hover{color:var(--white)}
+/* ---------- HEADER ---------- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0; right: 0;
+    height: 95px;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(20,20,30,0.25);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    z-index: 1000;
+}
 
-/* FOOTER */
-.footer-block{margin-top:28px;padding:14px;border-radius:10px;background:linear-gradient(90deg, rgba(169,77,255,0.06), rgba(93,138,255,0.03));text-align:center;color:var(--muted)}
+.nk-box {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 22px;
+    position: relative;
+    animation: floatLogo 3s infinite ease-in-out;
+}
+@keyframes floatLogo {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
 
-/* ANIMATIONS */
-.fade-in{opacity:0;transform:translateY(8px);animation:fadeIn 0.8s forwards}
-@keyframes fadeIn{to{opacity:1;transform:none}}
-.pulse{animation:pulse 3s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(169,77,255,0.06)}50%{box-shadow:0 0 40px 6px rgba(93,138,255,0.02)}100%{box-shadow:0 0 0 0 rgba(169,77,255,0.00)}}
+/* GLOW RING */
+.nk-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 22px;
+    background: conic-gradient(
+        rgba(255,77,148,0.3),
+        rgba(63,140,255,0.3),
+        rgba(199,125,255,0.3),
+        rgba(255,77,148,0.3)
+    );
+    filter: blur(14px);
+    animation: spinRing 9s linear infinite;
+}
+@keyframes spinRing {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
 
-/* responsive */
-@media(max-width:880px){.hero{grid-template-columns:1fr;gap:18px}.photo-frame{width:220px;height:220px;margin:0 auto}nav .container{flex-wrap:wrap}}
+/* ORBITING PARTICLES */
+.nk-orbit { position: absolute; inset: -35px; pointer-events: none; }
+.orbit-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    position: absolute;
+}
+.orbit-dot.a { background: var(--blue); top: 0; left: 50%; animation: orbitA 6s linear infinite; }
+.orbit-dot.b { background: var(--purple); right: 0; top: 50%; animation: orbitB 8s linear infinite; }
+.orbit-dot.c { background: var(--pink); bottom: 0; left: 40%; animation: orbitC 7s linear infinite; }
+
+@keyframes orbitA { from { transform: rotate(0deg) translateX(36px); } to { transform: rotate(360deg) translateX(36px); } }
+@keyframes orbitB { from { transform: rotate(0deg) translateX(36px); } to { transform: rotate(-360deg) translateX(36px); } }
+@keyframes orbitC { from { transform: rotate(0deg) translateX(36px); } to { transform: rotate(360deg) translateX(36px); } }
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 22px;
+}
+nav ul li a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 10px;
+}
+nav ul li a:hover {
+    color: var(--white);
+    text-shadow: 0 0 10px var(--blue);
+}
+
+/* ---------- SECTIONS + CONTAINERS ---------- */
+section {
+    padding: 140px 8% 50px;
+}
+
+.container {
+    background: rgba(15,15,25,0.55);
+    padding: 38px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+}
+
+/* Border Glow */
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+        120deg,
+        rgba(255,77,148,0.3),
+        rgba(63,140,255,0.3),
+        rgba(199,125,255,0.3)
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: borderSpin 7s linear infinite;
+    opacity: 0.5;
+}
+@keyframes borderSpin {
+    from { background-position: 0%; }
+    to   { background-position: 200%; }
+}
+
+/* Reveal on scroll */
+.reveal {
+    transform: translateY(26px);
+    opacity: 0;
+    transition: 0.8s ease;
+}
+.reveal.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ---------- HOME SECTION ---------- */
+#home .title {
+    font-size: 34px;
+    font-weight: 800;
+}
+#home .roles {
+    margin-top: 8px;
+    color: var(--muted);
+}
+#home .tagline {
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+/* Resume Button Highlight */
+.resume-btn {
+    display: inline-block;
+    padding: 14px 22px;
+    margin-top: 16px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    font-size: 16px;
+    font-weight: 700;
+    color: #001018;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(63,140,255,0.22);
+    transition: 0.3s;
+}
+.resume-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(199,125,255,0.35);
+}
+/* ---------- SKILLS SECTION ---------- */
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+}
+.skill-box {
+    padding: 12px 18px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.3s;
+    font-size: 15px;
+}
+.skill-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(63,140,255,0.35);
+    border: 1px solid var(--blue);
+}
+
+/* ---------- PROJECTS ---------- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.project-card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    color: #001018;
+    font-weight: 700;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.project-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.project-desc {
+    color: var(--muted);
+    flex: 1;
+}
+
+.btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.btn-view {
+    flex: 1;
+    padding: 10px 14px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    color: #001018;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.btn-view:hover {
+    transform: translateY(-4px);
+}
+
+.btn-more {
+    flex: 1;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.08);
+    color: var(--muted);
+    font-weight: 700;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.btn-more:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+/* ---------- CONTACT SECTION ---------- */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--muted);
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+}
+.contact-item:hover {
+    background: rgba(255,255,255,0.06);
+    color: white;
+}
+
+.contact-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    font-size: 18px;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    text-align: center;
+    padding: 22px;
+    opacity: 0.7;
+    margin-top: 20px;
+}
+
+/* ---------- MOBILE FIXES ---------- */
+@media (max-width: 768px) {
+    header {
+        height: 85px;
+        padding: 12px 20px;
+    }
+
+    section {
+        padding: 115px 6% 45px;
+    }
+
+    .container {
+        padding: 28px;
+    }
+
+    nav ul {
+        gap: 14px;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .planet {
+        display: none;
+    }
+}
+
+/* ------------------------------- END OF STYLE ------------------------------- */
 </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="container">
-    <div class="logo">Naresh Kumar</div>
-    <div class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-nk">NK</div>
+</div>
+
+<!-- BACKGROUNDS -->
+<div class="grid-bg"></div>
+<div class="planet"></div>
+
+<!-- STARS -->
+<script>
+for (let i = 0; i < 70; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    const size = Math.random() * 2 + 1;
+    s.style.width = size + "px";
+    s.style.height = size + "px";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.opacity = Math.random();
+    document.body.appendChild(s);
+}
+</script>
+
+<!-- HEADER -->
+<header>
+    <div style="display:flex;align-items:center;gap:14px;">
+        <div class="nk-box">
+            NK
+            <div class="nk-ring"></div>
+            <div class="nk-orbit">
+                <div class="orbit-dot a"></div>
+                <div class="orbit-dot b"></div>
+                <div class="orbit-dot c"></div>
+            </div>
+        </div>
+        <h3 style="font-size:18px;">Naresh Kumar</h3>
     </div>
-  </div>
-</nav>
 
-<main>
-  <!-- HERO -->
-  <section id="home" class="hero container">
-    <div>
-      <h1 class="fade-in">Hi, I'm <span style="color:var(--p)">Naresh Kumar</span></h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
 
-      <div class="role-badges fade-in" style="animation-delay:0.12s">
-        <div class="badge">Digital Marketer</div>
-        <div class="badge">Business Dev. Analyst</div>
-        <div class="badge">IT Supporter</div>
-      </div>
 
-      <p class="tagline fade-in" style="animation-delay:0.22s">Turning ideas into impact — marketing, strategy & support, done simply.</p>
+<!-- MAIN -->
+<section id="home" class="reveal">
+    <div class="container">
+        <h1 class="title">Hi, I'm <span style="color:var(--blue)">Naresh Kumar</span></h1>
+        <p class="roles">Digital Marketer • Business Development Analyst • IT Supporter</p>
+        <p class="tagline">Turning ideas into clear actions — marketing, strategy & support.</p>
 
-      <div style="margin-top:18px" class="fade-in" style="animation-delay:0.32s">
-        <a class="btn" href="https://drive.google.com/file/d/18BwcP4ZIlAIvhhu8hnASYOgULTNHe-36/view?usp=drive_link" target="_blank" rel="noopener">View Resume</a>
-        <a class="btn ghost" href="#projects" style="margin-left:10px">See Projects</a>
-      </div>
+        <a class="resume-btn" target="_blank"
+            href="https://drive.google.com/file/d/1M8qYqpyBmbjO5jWyGKvQ2ON7opbU_RFV/view?usp=drive_link">
+            Resume
+        </a>
     </div>
+</section>
 
-    <!-- Photo: replace src with your file name (profile.png) or a base64 data URL -->
-    <div class="photo-frame pulse fade-in" style="animation-delay:0.4s">
-      <img src="profile.png" alt="Naresh Photo">
-      <!-- If you want to embed base64 instead of profile.png, replace src with data:image/png;base64,...... -->
+<section id="about" class="reveal">
+    <div class="container">
+        <h2>About Me</h2>
+
+        <p style="margin-top:12px;">
+            I’m Naresh Kumar, a final-year IT student passionate about blending technology, digital marketing, and
+            business strategy. I have hands-on experience in Technical Support, SEO, and Social Media Marketing.
+        </p>
+
+        <p style="margin-top:12px;">
+            My strength lies in understanding people, communicating clearly, and building strong relationships.
+            As a six-year Hockey Team Captain, I learned leadership, teamwork, and discipline.
+        </p>
+
+        <p style="margin-top:12px;">
+            Whether it’s content writing, digital strategy, or problem-solving, my focus is always on meaningful,
+            value-driven outcomes.
+        </p>
     </div>
-  </section>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about" class="section container about">
-    <h2 class="fade-in">About Me</h2>
-    <p class="fade-in" style="animation-delay:0.12s">
-      I’m Naresh Kumar, a final-year IT student passionate about blending technology, digital marketing, and business strategy. I have hands-on experience in Technical Support, SEO, and Social Media Marketing, gained through internships at Swift Power Pvt. Ltd. and Leo Nexley.<br><br>
-      My strength lies in understanding people, communicating clearly, and building strong relationships. As a six-year Hockey Team Captain, I learned leadership, teamwork, and the discipline needed to achieve goals under pressure.<br><br>
-      I enjoy exploring new ideas, learning fast, and bringing structure to any project I work on. Whether it’s content writing, digital strategy, or analytical problem-solving, I aim to deliver clean, meaningful, and value-driven results.
-    </p>
-  </section>
 
-  <!-- SKILLS -->
-  <section id="skills" class="section container">
-    <h2 class="fade-in">Skills</h2>
-    <div class="skills-grid fade-in" style="animation-delay:0.12s">
-      <div class="skill">Digital Marketing</div>
-      <div class="skill">SEO</div>
-      <div class="skill">SMM</div>
-      <div class="skill">Content Writing & Analysis</div>
-      <div class="skill">Graphics (Canva)</div>
-      <div class="skill">Programming — Python (Basics)</div>
+<section id="skills" class="reveal">
+    <div class="container">
+        <h2>Skills</h2>
+
+        <div class="skills-grid">
+            <div class="skill-box">Digital Marketing</div>
+            <div class="skill-box">SEO & SMM</div>
+            <div class="skill-box">Programming (HTML, CSS, Python)</div>
+            <div class="skill-box">Content Writing & Analysis</div>
+            <div class="skill-box">Graphics Design (Canva)</div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="section container">
-    <h2 class="fade-in">Projects</h2>
-    <div class="projects-grid fade-in" style="animation-delay:0.12s">
 
-      <div class="card">
-        <div class="thumb">Emotion-Based Music Recommendation</div>
-        <h3>Emotion-Based Music Recommendation</h3>
-        <p>Web app that captures webcam input, detects user emotion, and recommends mood-matched songs in real time. Implemented complete workflow from face capture to playlist mapping and testing.</p>
-        <div class="actions"><a class="btn ghost" href="#" target="_blank">View</a></div>
-      </div>
+<section id="projects" class="reveal">
+    <div class="container">
+        <h2>Projects</h2>
 
-      <div class="card">
-        <div class="thumb">HR Analytics — Attrition</div>
-        <h3>HR Analytics — Employee Attrition Prediction</h3>
-        <p>Final-year project using Random Forest to predict employee attrition and an interactive HR dashboard to visualise drivers and trends for proactive retention strategies.</p>
-        <div class="actions"><a class="btn ghost" href="#" target="_blank">View</a></div>
-      </div>
+        <div class="projects-grid">
 
-      <div class="card">
-        <div class="thumb">SEO & SMM Campaigns</div>
-        <h3>Digital Marketing — SEO & SMM Campaigns</h3>
-        <p>Managed SEO and social media campaigns to improve online engagement and lead generation. Created content, A/B tested creatives, and analysed performance to reduce CPL and increase CTR.</p>
-        <div class="actions"><a class="btn ghost" href="#" target="_blank">View</a></div>
-      </div>
+            <!-- DIGITAL MARKETING -->
+            <div class="project-card">
+                <span class="badge">Digital Marketing</span>
+                <div class="project-title">Digital Marketing Campaigns</div>
+                <p class="project-desc">SEO strategy, SMM analytics, engagement analysis.</p>
 
+                <div class="btns">
+                    <a class="btn-view" target="_blank"
+                        href="https://drive.google.com/drive/u/0/folders/1e10f-L7YFRVhTb-F6vPGynSmnJ2HV_b6">View</a>
+
+                    <a class="btn-more" target="_blank"
+                        href="https://drive.google.com/file/d/1GoD3db9RAC31aC9v7RledZmuNwoSq7il/view?usp=drive_link">More</a>
+                </div>
+            </div>
+
+            <!-- WEB APPLICATION -->
+            <div class="project-card">
+                <span class="badge">Web Application</span>
+                <div class="project-title">Emotion Based Music System</div>
+                <p class="project-desc">AI camera detects mood and suggests music.</p>
+
+                <div class="btns">
+                    <a class="btn-view"
+                        href="https://drive.google.com/drive/u/0/folders/1RsstVoRXdtl4Kj9nYRByY1cTsbE__hPJ" target="_blank">View</a>
+
+                    <a class="btn-more"
+                        href="https://drive.google.com/file/d/1GoD3db9RAC31aC9v7RledZmuNwoSq7il/view?usp=drive_link"
+                        target="_blank">More</a>
+                </div>
+            </div>
+
+            <!-- DATA ANALYTICS -->
+            <div class="project-card">
+                <span class="badge">Data Analytics</span>
+                <div class="project-title">HR Analytics & Attrition Model</div>
+                <p class="project-desc">ML-based attrition prediction & data visualization.</p>
+
+                <div class="btns">
+                    <a class="btn-view"
+                        href="https://drive.google.com/drive/u/0/folders/1QMj2ifuRik6iaWBOonDaLG09rXQvn-bs" target="_blank">View</a>
+
+                    <a class="btn-more"
+                        href="https://drive.google.com/file/d/1GoD3db9RAC31aC9v7RledZmuNwoSq7il/view?usp=drive_link"
+                        target="_blank">More</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="section container">
-    <h2 class="fade-in">Contact</h2>
 
-    <div class="contact-list fade-in" style="animation-delay:0.12s">
-      <div class="contact-item">
-        <!-- phone icon -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:0 0 18px;margin-right:8px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12 1.07.36 2.11.7 3.09a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l1.99-1.15a2 2 0 0 1 2.11-.45c.98.34 2.02.58 3.09.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <a href="tel:7200477125">+91 7200477125</a>
-      </div>
+<section id="contact" class="reveal">
+    <div class="container">
+        <h2>Contact</h2>
 
-      <div class="contact-item">
-        <!-- mail icon -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:0 0 18px;margin-right:8px"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <a href="mailto:naresharumugam9941@gmail.com">naresharumugam9941@gmail.com</a>
-      </div>
+        <div class="contact-list">
 
-      <div class="contact-item">
-        <!-- linkedin icon -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:0 0 18px;margin-right:8px"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h-4v-12h4v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <a href="https://www.linkedin.com/in/naresharumugam" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
+            <a class="contact-item" href="tel:7200477125">
+                <span class="contact-icon"><i class="fa-solid fa-phone"></i></span>
+                Phone — 7200477125
+            </a>
 
-      <div class="contact-item">
-        <!-- instagram icon -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:0 0 18px;margin-right:8px"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4"/><path d="M16 11.37A4 4 0 1 1 12.63 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <a href="https://www.instagram.com/naresh_argm/?__pwa=1" target="_blank" rel="noopener">Instagram</a>
-      </div>
+            <a class="contact-item" href="mailto:naresharumugam9941@gmail.com">
+                <span class="contact-icon"><i class="fa-solid fa-envelope"></i></span>
+                Mail — naresharumugam9941@gmail.com
+            </a>
 
-      <div class="contact-item">
-        <!-- X / Twitter icon -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:0 0 18px;margin-right:8px"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <a href="https://x.com/Naresh_argm" target="_blank" rel="noopener">X / Twitter</a>
-      </div>
+            <a class="contact-item" target="_blank" href="https://linkedin.com/in/naresharumugam">
+                <span class="contact-icon"><i class="fa-brands fa-linkedin"></i></span>
+                LinkedIn
+            </a>
 
+            <a class="contact-item" target="_blank" href="https://instagram.com/naresh_argm">
+                <span class="contact-icon"><i class="fa-brands fa-instagram"></i></span>
+                Instagram
+            </a>
+
+            <a class="contact-item" target="_blank" href="https://x.com/Naresh_argm">
+                <span class="contact-icon"><i class="fa-brands fa-x-twitter"></i></span>
+                X / Twitter
+            </a>
+
+            <a class="contact-item" target="_blank" href="https://github.com/Naresh00712005">
+                <span class="contact-icon"><i class="fa-brands fa-github"></i></span>
+                GitHub
+            </a>
+
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- FOOTER LABEL -->
-  <div class="container">
-    <div class="footer-block">© Naresh Kumar Arumugam</div>
-  </div>
-
-</main>
+<footer>
+    © Naresh Kumar — All Rights Reserved
+</footer>
 
 <script>
-// smooth scroll for internal links
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click', e=>{
-  const target = document.querySelector(a.getAttribute('href'));
-  if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
-}));
+/* ---------- Loader ---------- */
+window.addEventListener("load", () => {
+    document.getElementById("loader").style.opacity = "0";
+    setTimeout(() => document.getElementById("loader").style.display = "none", 600);
+});
 
-// simple fade-in triggers on load (adds slight delay)
-document.addEventListener('DOMContentLoaded', ()=> {
-  document.querySelectorAll('.fade-in').forEach((el,i)=>{ el.style.animationDelay = (i*0.08)+'s'; el.classList.add('fade-in'); });
+/* ---------- Smooth Scroll Fix ---------- */
+const headerHeight = document.querySelector("header").offsetHeight + 10;
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", function(e) {
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+            e.preventDefault();
+            const offsetTop = target.offsetTop - headerHeight;
+            window.scrollTo({ top: offsetTop, behavior: "smooth" });
+        }
+    });
+});
+
+/* ---------- Reveal on Scroll ---------- */
+const reveals = document.querySelectorAll(".reveal");
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+}, { threshold: 0.2 });
+reveals.forEach(r => observer.observe(r));
+
+/* ---------- Parallax Planet ---------- */
+const planet = document.querySelector(".planet");
+window.addEventListener("scroll", () => {
+    let y = window.scrollY;
+    planet.style.transform = `translateY(${y * -0.08}px)`;
 });
 </script>
 
